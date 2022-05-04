@@ -1,5 +1,6 @@
 function computerPlay()
 {
+    //random number 0, 1, or 2
     let choice = Math.floor(Math.random() * 3);
    
     
@@ -25,18 +26,18 @@ function userPlay()
 {
     let change = false;
 
+    //keep on asking until valid input
     while(!change)
     {
         let choice = prompt("Play (ROCK,PAPER,SCISSORS):");
         if(choice == null)
         {
-            return 0;
+            return "CANCEL";
         }
         if(choice.toUpperCase() == "ROCK")
         {
             
             change = true;
-            console.log("You played ROCK");
             return "ROCK";
             
         }
@@ -44,14 +45,12 @@ function userPlay()
         {
 
             change = true;
-            console.log("You played PAPER");
             return "PAPER";
             
         }
         else if (choice.toUpperCase() == "SCISSORS")
         {
             change = true;
-            console.log("You played SCISSORS");
             return "SCISSORS";
         }   
         else
@@ -65,6 +64,7 @@ function userPlay()
 
 function round(Computer, Player)
 {
+    //get winner according to choices
     if(Computer.toUpperCase() == "ROCK")
     {
         if(Player.toUpperCase() == "SCISSORS")
@@ -123,14 +123,25 @@ function round(Computer, Player)
 
 function game()
 {
+
     let computerScore = 0;
     let playerScore = 0;
+
+    //five times
     for(let i = 0; i<5; i++)
-    {
+    { 
+        console.log("************ROUND: " + (i+1));
+        //get choice and play round
         let computerChoice  = computerPlay();
         let playerChoice = userPlay();
+
+        if(playerChoice == "CANCEL") return;
+       
+        console.log("You played " + playerChoice);
         console.log("Computer played " + computerChoice);
         let result = round(computerChoice, playerChoice);
+
+        //add score according to win returned from round
         if (result == 1)
         {
             computerScore++;
@@ -140,6 +151,8 @@ function game()
             playerChoice++;
         }
     }
+
+    //final results
     console.log("Your score is: " + playerScore);
     console.log("Computer score is: " + computerScore);
     if(computerScore < playerScore)
@@ -154,6 +167,19 @@ function game()
     {
         console.log("Game over: Tie!")
     }
+    
 }
+function draw() {
+    ctx.clearRect(0,0,WIDTH,HEIGHT);
+    for (let i = 0; i < 100; i++) {
+      ctx.beginPath();
+      ctx.fillStyle = 'rgba(255,0,0,0.5)';
+      ctx.arc(random(WIDTH), random(HEIGHT), random(50), 0, 2 * Math.PI);
+      ctx.fill();
+    }
+  }
 
+
+
+draw();
 game();
