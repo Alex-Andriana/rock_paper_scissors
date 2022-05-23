@@ -24,62 +24,54 @@ function computerPlay()
 
 function userPlay()
 {
-    let change = false;
+    
 
     //keep on asking until valid input
-    while(!change)
-    {
-        let choice = prompt("Play (ROCK,PAPER,SCISSORS):");
-        if(choice == null)
-        {
-            return "CANCEL";
-        }
-        if(choice.toUpperCase() == "ROCK")
-        {
-            
-            change = true;
-            return "ROCK";
-            
-        }
-        else if (choice.toUpperCase() == "PAPER")
-        {
+   
+        // get user input from event
+        let choice = "nothing";
 
-            change = true;
+        const rock = document.querySelector('#rock');
+        const paper = document.querySelector('#paper');
+        const scissors = document.querySelector('#scissors');
+
+        rock.addEventListener('click', () => {
+            return "ROCK";
+        });
+
+        paper.addEventListener('click', () => {
             return "PAPER";
-            
-        }
-        else if (choice.toUpperCase() == "SCISSORS")
-        {
-            change = true;
-            return "SCISSORS";
-        }   
-        else
-        {
-             //wrong input
-             console.log("Invalid Input, try again (ROCK,PAPER,SCISSORS)")
-        }
+        });
+
+        scissors.addEventListener('click', () => {
+           return "SCISSORS";
+        });
+
+
+
+
 
     }
-}
 
-function round(Computer, Player)
+
+function round(Computer, Player, disp, res)
 {
-    //get winner according to choices
+    disp.innerHTML = "<h1>Computer Played:" + Computer + "<br> You Played:" + Player + "</h1>";
     if(Computer.toUpperCase() == "ROCK")
     {
         if(Player.toUpperCase() == "SCISSORS")
         {
-            console.log("Computer won");
+            res.innerHTML = "<h1>Computer won</h1>";
             return 1;
         }
         else if (Player.toUpperCase() == "PAPER")
         {
-            console.log("You won");
+            res.innerHTML = "<h1>You won</h1>";
             return 2;
         }
         else
         {
-            console.log("Tie!");
+            res.innerHTML = "<h1>Tie</h1>";
             return 0; 
         }
     }
@@ -87,17 +79,17 @@ function round(Computer, Player)
     {
         if(Player.toUpperCase() == "ROCK")
         {
-            console.log("You won");
+            res.innerHTML = "<h1>You won</h1>";
             return 2;
         }
         else if (Player.toUpperCase() == "PAPER")
         {
-            console.log("Computer won");
+            res.innerHTML = "<h1>Computer won</h1>";
             return 1;
         }
         else
         {
-            console.log("Tie!");
+            res.innerHTML = "<h1>Tie</h1>";
             return 0; 
         }
     }
@@ -105,81 +97,71 @@ function round(Computer, Player)
     {
         if(Player.toUpperCase() == "SCISSORS")
         {
-            console.log("You won");
+            res.innerHTML = "<h1>You won</h1>";
             return 2;
         }
         else if (Player.toUpperCase() == "ROCK")
         {
-            console.log("Computer won");
+            res.innerHTML = "<h1>Computer won</h1>";
             return 1;   
         }
         else
         {
-            console.log("Tie!");
+            res.innerHTML = "<h1>Tie</h1>";
             return 0; 
         }
     }
 }
 
-function game()
-{
+
+
+
+    const disp  = document.createElement('div');
+    const res = document.createElement('div');
+    const b = document.querySelector("body");
+    b.appendChild(disp);
+    b.appendChild(res);
+
+    
+
+
 
     let computerScore = 0;
-    let playerScore = 0;
+    let playerScore = "Nothing";
 
-    //five times
-    for(let i = 0; i<5; i++)
-    { 
-        console.log("************ROUND: " + (i+1));
-        //get choice and play round
-        let computerChoice  = computerPlay();
-        let playerChoice = userPlay();
 
-        if(playerChoice == "CANCEL") return;
+            
+
+            const rock = document.querySelector('#rock');
+            const paper = document.querySelector('#paper');
+            const scissors = document.querySelector('#scissors');
+
+          
+
+           
+
+            rock.addEventListener('click', () => {
+                playerChoice =  "ROCK";
+                computerChoice  = computerPlay();
+                round(computerChoice, playerChoice, disp, res);
+            });
+
+            paper.addEventListener('click', () => {
+                playerChoice = "PAPER";
+                computerChoice  = computerPlay();
+                round(computerChoice, playerChoice, disp, res);
+            });
+
+           
+            scissors.addEventListener('click', () => {
+            playerChoice = "SCISSORS";
+            computerChoice  = computerPlay();
+            round(computerChoice, playerChoice, disp, res);
+          
+            
+            });
+
        
-        console.log("You played " + playerChoice);
-        console.log("Computer played " + computerChoice);
-        let result = round(computerChoice, playerChoice);
 
-        //add score according to win returned from round
-        if (result == 1)
-        {
-            computerScore++;
-        }
-        else if(result == 2)
-        {
-            playerChoice++;
-        }
-    }
+            
 
-    //final results
-    console.log("Your score is: " + playerScore);
-    console.log("Computer score is: " + computerScore);
-    if(computerScore < playerScore)
-    {
-        console.log("Game over: You won");
-    }
-    else if(computerScore > playerScore)
-    {
-        console.log("Game over: You lost, computer won");
-    }
-    else
-    {
-        console.log("Game over: Tie!")
-    }
-    
-}
-function draw() {
-    ctx.clearRect(0,0,WIDTH,HEIGHT);
-    for (let i = 0; i < 100; i++) {
-      ctx.beginPath();
-      ctx.fillStyle = 'rgba(255,0,0,0.5)';
-      ctx.arc(random(WIDTH), random(HEIGHT), random(50), 0, 2 * Math.PI);
-      ctx.fill();
-    }
-  }
-
-
-
-draw();
-game();
