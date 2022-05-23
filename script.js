@@ -1,5 +1,6 @@
 function computerPlay()
 {
+    //random number 0, 1, or 2
     let choice = Math.floor(Math.random() * 3);
    
     
@@ -23,63 +24,54 @@ function computerPlay()
 
 function userPlay()
 {
-    let change = false;
+    
 
-    while(!change)
-    {
-        let choice = prompt("Play (ROCK,PAPER,SCISSORS):");
-        if(choice == null)
-        {
-            return 0;
-        }
-        if(choice.toUpperCase() == "ROCK")
-        {
-            
-            change = true;
-            console.log("You played ROCK");
+    //keep on asking until valid input
+   
+        // get user input from event
+        let choice = "nothing";
+
+        const rock = document.querySelector('#rock');
+        const paper = document.querySelector('#paper');
+        const scissors = document.querySelector('#scissors');
+
+        rock.addEventListener('click', () => {
             return "ROCK";
-            
-        }
-        else if (choice.toUpperCase() == "PAPER")
-        {
+        });
 
-            change = true;
-            console.log("You played PAPER");
+        paper.addEventListener('click', () => {
             return "PAPER";
-            
-        }
-        else if (choice.toUpperCase() == "SCISSORS")
-        {
-            change = true;
-            console.log("You played SCISSORS");
-            return "SCISSORS";
-        }   
-        else
-        {
-             //wrong input
-             console.log("Invalid Input, try again (ROCK,PAPER,SCISSORS)")
-        }
+        });
+
+        scissors.addEventListener('click', () => {
+           return "SCISSORS";
+        });
+
+
+
+
 
     }
-}
 
-function round(Computer, Player)
+
+function round(Computer, Player, disp, res)
 {
+    disp.innerHTML = "<h1>Computer Played:" + Computer + "<br> You Played:" + Player + "</h1>";
     if(Computer.toUpperCase() == "ROCK")
     {
         if(Player.toUpperCase() == "SCISSORS")
         {
-            console.log("Computer won");
+            res.innerHTML = "<h1>Computer won</h1>";
             return 1;
         }
         else if (Player.toUpperCase() == "PAPER")
         {
-            console.log("You won");
+            res.innerHTML = "<h1>You won</h1>";
             return 2;
         }
         else
         {
-            console.log("Tie!");
+            res.innerHTML = "<h1>Tie</h1>";
             return 0; 
         }
     }
@@ -87,17 +79,17 @@ function round(Computer, Player)
     {
         if(Player.toUpperCase() == "ROCK")
         {
-            console.log("You won");
+            res.innerHTML = "<h1>You won</h1>";
             return 2;
         }
         else if (Player.toUpperCase() == "PAPER")
         {
-            console.log("Computer won");
+            res.innerHTML = "<h1>Computer won</h1>";
             return 1;
         }
         else
         {
-            console.log("Tie!");
+            res.innerHTML = "<h1>Tie</h1>";
             return 0; 
         }
     }
@@ -105,55 +97,71 @@ function round(Computer, Player)
     {
         if(Player.toUpperCase() == "SCISSORS")
         {
-            console.log("You won");
+            res.innerHTML = "<h1>You won</h1>";
             return 2;
         }
         else if (Player.toUpperCase() == "ROCK")
         {
-            console.log("Computer won");
+            res.innerHTML = "<h1>Computer won</h1>";
             return 1;   
         }
         else
         {
-            console.log("Tie!");
+            res.innerHTML = "<h1>Tie</h1>";
             return 0; 
         }
     }
 }
 
-function game()
-{
-    let computerScore = 0;
-    let playerScore = 0;
-    for(let i = 0; i<5; i++)
-    {
-        let computerChoice  = computerPlay();
-        let playerChoice = userPlay();
-        console.log("Computer played " + computerChoice);
-        let result = round(computerChoice, playerChoice);
-        if (result == 1)
-        {
-            computerScore++;
-        }
-        else if(result == 2)
-        {
-            playerChoice++;
-        }
-    }
-    console.log("Your score is: " + playerScore);
-    console.log("Computer score is: " + computerScore);
-    if(computerScore < playerScore)
-    {
-        console.log("Game over: You won");
-    }
-    else if(computerScore > playerScore)
-    {
-        console.log("Game over: You lost, computer won");
-    }
-    else
-    {
-        console.log("Game over: Tie!")
-    }
-}
 
-game();
+
+
+    const disp  = document.createElement('div');
+    const res = document.createElement('div');
+    const b = document.querySelector("body");
+    b.appendChild(disp);
+    b.appendChild(res);
+
+    
+
+
+
+    let computerScore = 0;
+    let playerScore = "Nothing";
+
+
+            
+
+            const rock = document.querySelector('#rock');
+            const paper = document.querySelector('#paper');
+            const scissors = document.querySelector('#scissors');
+
+          
+
+           
+
+            rock.addEventListener('click', () => {
+                playerChoice =  "ROCK";
+                computerChoice  = computerPlay();
+                round(computerChoice, playerChoice, disp, res);
+            });
+
+            paper.addEventListener('click', () => {
+                playerChoice = "PAPER";
+                computerChoice  = computerPlay();
+                round(computerChoice, playerChoice, disp, res);
+            });
+
+           
+            scissors.addEventListener('click', () => {
+            playerChoice = "SCISSORS";
+            computerChoice  = computerPlay();
+            round(computerChoice, playerChoice, disp, res);
+          
+            
+            });
+
+       
+
+            
+
